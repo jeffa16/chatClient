@@ -1,0 +1,31 @@
+<div class="ui cards">
+
+    <div class="card" *ngFor="let filter of usernames">
+        <div class="content">
+            <div class="header">{{filter}} <i class="close icon" (click)="closeButton(filter)"></i></div>
+
+            <div class="ui list">
+                <ng-container *ngFor="let message of messages">
+                    <div class="item" *ngIf="message.message.from ===filter && message.message.to === username|| message.message.to === filter">
+
+                        <div *ngIf="message.message.from === filter" class="ui right pointing label">
+                            {{message.message.message }}
+                        </div>
+                        <div *ngIf="message.message.to === filter" class="ui left pointing label">
+                            {{message.message.message}}
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="extra content">
+            <form [formGroup]="form">
+                <div class="ui action input">
+                <input class="ui input" name="{{filter}}" [formControlName]="filter"/>
+                <button type="button" class="button ui basic" (click)="onSubmit(filter)">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

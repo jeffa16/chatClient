@@ -1,0 +1,28 @@
+
+  <div class="container" height=700>
+  <div class="ui grid stackable">
+    <div class="four wide column">
+      <app-user-watch (selectedUser)="filterUsers($event)"></app-user-watch>
+    </div>
+
+    <div class="twelve wide column flex">
+      <app-chat-thread ></app-chat-thread>  
+    </div>
+
+  </div>
+  <div class="ui divider">
+  <form [formGroup]="usernameForm" (ngSubmit)="editUsername()">
+    <div class="ui action input">
+      <label class="ui label" for="username">Enter Username</label>
+      <input class="input" name="username" formControlName="usernameInput"/>
+      <button class="button ui secondary" [disabled]="usernameForm.invalid">Update</button>
+    </div>
+  </form>
+    <label>Current Username is {{username}}</label>
+    
+  
+</div>
+</div>
+<app-config-modal *ngIf="showModal" (dismiss)="showModal=false">
+  
+</app-config-modal>

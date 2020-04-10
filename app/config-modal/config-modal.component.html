@@ -1,0 +1,21 @@
+<div (click)="onDismissClick()" class="ui dimmer visible active"> <!-- The dark background-->
+    <div (click)="$event.stopPropagation()" class="ui modal visible active">
+
+        <div class="header">
+            Initial Configuration
+        </div>
+        <div class="content">
+            <form [formGroup]="usernameForm" (ngSubmit)="editUsername()">
+                <div class="ui action input">
+                  <label class="ui label" for="username">Enter Username</label>
+                  <input class="input" name="username" formControlName="usernameInput"/>
+                  <button class="button ui secondary" [disabled]="usernameForm.invalid">Update</button>
+                </div>
+              </form>
+        </div>
+
+        <div class="actions">
+            <ng-content select="[modalFooter]"></ng-content>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+.close.icon {
+    float: right;
+}
+.field {
+    margin-bottom: 0.75rem;
+}
+.ui.right.pointing.label {
+    float: right;
+}
+.ui.left.pointing.label {
+    float: left;
+}

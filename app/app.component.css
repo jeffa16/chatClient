@@ -2,3 +2,12 @@
 .field {
     margin-bottom: 0.75rem;
 }
+.ui.divider {
+    margin: 1em;
+}
+.input {
+    margin: 1em;
+}
+.container {
+    margin: 1em;
+}

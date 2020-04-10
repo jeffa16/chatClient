@@ -1,6 +1,6 @@
 
 <div class="ui vertical menu pointed" >
-    <h4 class="ui header">Available Users</h4>
+    <div class="header item"><h4>Available Users</h4></div>
     <a class="item" href="./" target="_blank" *ngIf="users.size <= 1">Open a new tab and pretend to be someone else.</a>
 <ng-container *ngFor="let user of users">
     <a class="item" *ngIf="user != username" [ngClass]="{active: openUsers.has(user)}" (click)="filterUsers(user)" >{{user}} 

@@ -10,3 +10,7 @@
 .ui.left.pointing.label {
     float: left;
 }
+.ui.list {
+    overflow: scroll;
+    height: 24em;
+}

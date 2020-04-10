@@ -12,7 +12,9 @@ import { filter, tap } from 'rxjs/operators';
 })
 export class UserWatchComponent implements OnInit {
   private subscription: Subscription;
-  constructor(private mqttService: MqttService, private usernameService: UsernameService) { }
+  constructor(private mqttService: MqttService, private usernameService: UsernameService) {
+    navigator.serviceWorker.register('sw.js');
+   }
   users = new Set();
   username = '';
   openUsers = new Set();
@@ -35,9 +37,11 @@ export class UserWatchComponent implements OnInit {
       if(!this.openUsers.has(jsonObject.from) ){
         if(this.messageQueue[jsonObject.from]){
           this.messageQueue[jsonObject.from] +=1;
+          this.notifyMe(jsonObject.message);
         }
         else if(this.username != '') {
           this.messageQueue[jsonObject.from] =1;
+          this.showNotification(jsonObject.message);
         }
         if(!this.users.has(jsonObject.from)) {
           this.users.add(jsonObject.from);
@@ -79,5 +83,41 @@ export class UserWatchComponent implements OnInit {
       this.usernameService.openUsers$.next({username: user, action: 'add'})
     }
   }
-
+  notifyMe(message: string) {
+    // Let's check if the browser supports notifications
+    if (!("Notification" in window)) {
+      alert("This browser does not support desktop notification");
+    }
+  
+    // Let's check whether notification permissions have already been granted
+    else if (Notification.permission === "granted") {
+      // If it's okay let's create a notification
+      var notification = new Notification(message);
+    }
+  
+    // Otherwise, we need to ask the user for permission
+    else if (Notification.permission !== "denied") {
+      Notification.requestPermission().then(function (permission) {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          var notification = new Notification(message);
+        }
+      });
+    }
+  
+    // At last, if the user has denied notifications, and you 
+    // want to be respectful there is no need to bother them any more.
+  }
+  showNotification(message: string) {
+    Notification.requestPermission(function(result) {
+      if (result === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification(message, {
+            vibrate: [200, 100, 200, 100, 200, 100, 200],
+            tag: ''
+          });
+        });
+      }
+    });
+  }
 }
